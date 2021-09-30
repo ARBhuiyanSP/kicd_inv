@@ -1,0 +1,102 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 1, 2019, 12:39:34 PM
+    Author     : Tanveer Qureshee
+*/
+
+.modal_body_centerize{
+   padding: 1% 5% 3% 0%;
+}
+.modal_header_custom_background{
+    background-color: #BCC6CC;
+}
+.modal_body_custom_background{
+    background-color: lightgrey;
+}
+.modal_footer_custom_background{
+    background-color: #BCC6CC;
+}
+table.site_custome_table{
+    border: 1px solid lightgray;
+    border-collapse : collapse;
+    font-size: 13px;
+}
+table.site_custome_table thead tr th{
+    text-align      : center;
+    border-collapse : collapse;
+    /*border: 1px solid lightgray;*/
+    background-color: lightgray;
+}
+table.site_custome_table tbody tr td{
+    border-collapse : collapse;
+    border: 1px solid lightgray;
+    padding: 1px 5px;
+}
+#item_information .row{
+    background-color: #F8FFF0;
+}
+.error{
+    color: red;
+}
+.operation_message{
+    margin: 1% 1%;
+}
+.json_alert_message{
+    display: none;
+}
+table.search-table{
+    background-color: #F9F8F6;
+}
+table.search-table tr td{
+    vertical-align: text-top;
+    padding: 1px 5px !important;
+}
+table.data-list-table{
+    font-size: 14px;
+}
+table.data-list-table tr th{
+    text-align: center;
+}
+span.sub_menu_text_design{
+    display: inline-block !important;
+    color: black;
+    font-size: 14px !important;
+    margin: 0 4%;
+}
+.sub_menu_text_nav_link{
+    padding: 2% 5% !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+table.list-table-custom-style {
+    background-color: white !important;
+}
+
+table.list-table-custom-style tr th {
+    font-size: 14px !important;
+    text-align: center !important;
+    background-color: lightgrey !important;
+    padding: 10px 2px !important;
+    word-break: keep-all;
+    word-wrap: normal;
+}
+
+table.list-table-custom-style tr td {
+    font-size: 14px !important;
+    padding: 5px !important;
+    vertical-align: top;
+}
+
