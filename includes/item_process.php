@@ -167,6 +167,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     $name               =   mysqli_real_escape_string($conn, $_POST['name']);
     $part_no			=   mysqli_real_escape_string($conn, $_POST['part_no']);
     $spec				=   mysqli_real_escape_string($conn, $_POST['spec']);
+    $location			=   mysqli_real_escape_string($conn, $_POST['location']);
     $qty_unit           =   mysqli_real_escape_string($conn, $_POST['qty_unit']);
     $material_min_stock =   mysqli_real_escape_string($conn, $_POST['material_min_stock']);
     // check duplicate:
@@ -185,11 +186,11 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
         if(isset($_POST['material_update_id']) && !empty($_POST['material_update_id'])){
             $edit_id     =   $_POST['material_update_id'];
             /* $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id"; */
-			 $sql         = "UPDATE inv_material SET material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id";
+			 $sql         = "UPDATE inv_material SET material_description='$name',spec='$spec',location='$location',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id";
             $status      = 'success';
             $message     = 'Data have been successfully updated!';            
         }else{
-            $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,spec,material_min_stock,qty_unit,part_no) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."', '".$spec."', '".$material_min_stock."','".$qty_unit."','".$part_no."')";
+            $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,spec,location,material_min_stock,qty_unit,part_no) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."', '".$spec."', '".$location."', '".$material_min_stock."','".$qty_unit."','".$part_no."')";
             $status      = 'success';
             $message     = 'Data have been successfully inserted!';
             
@@ -418,7 +419,7 @@ function item_table_json_response($tableName) {
             
             $material_id_code           =  $data['material_id_code'];
             $material_description       =  $data['material_description'];
-            $material_min_stock         =  $data['material_min_stock'];
+            $location         =  $data['location'];
             $unit_name                  =  getDataRowByTableAndId('inv_item_unit', $data['qty_unit'])->unit_name;
             $feedback.="<tr>
                 <td>
@@ -427,7 +428,7 @@ function item_table_json_response($tableName) {
                 <td>$sub_category_description</td>
                 <td>$material_id_code</td>
                 <td>$material_description</td>
-                <td>$material_min_stock</td>
+                <td>$location</td>
                 <td>$unit_name</td>
                 <td>
                     <button type=\"button\" class=\"btn btn-sm\" onclick=\"openMaterialEditForm('$id');\">
@@ -603,6 +604,12 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
                 <label class="control-label col-sm-5" for="name">Specifiaction:</label>
                 <div class="col-sm-7">
                     <input type="text" class="form-control" id="edit_item_name" placeholder="brand name" name="spec" value="<?php if(isset($editData->spec)){ echo $editData->spec; } ?>">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-5" for="name">Location:</label>
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" id="edit_item_name" placeholder="location" name="location" value="<?php if(isset($editData->location)){ echo $editData->location; } ?>">
                 </div>
             </div>
 			<!-- <div class="form-group">

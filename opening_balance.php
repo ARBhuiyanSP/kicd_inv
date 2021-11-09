@@ -23,14 +23,7 @@ display:none;
         <div class="card-header">
             <i class="fas fa-table"></i>
             Opening Balance Maintenece</div>
-        <div class="card-body">
-           
-		   
-                        
-						
-						
-						
-						
+        <div class="card-body">						
 <div>
     <form name="add_name" action="" method="post" id="opening_entry_form" onsubmit="showFormIsProcessing('opening_entry_form');">
         <div class="col-xs-4" style="background-color:#007BFF;color:#fff;">
@@ -38,7 +31,7 @@ display:none;
 				<label>Opening Stock Entry Date</label>
 				<?php 
 							$warehouse_id	=	$_SESSION['logged']['warehouse_id'];
-							$sqlop			=	"SELECT * FROM inv_materialbalance WHERE `mbtype`='OP' AND `warehouse_id`='$warehouse_id';";
+							$sqlop			=	"SELECT * FROM `inv_materialbalance` WHERE `mbtype`='OP' AND `warehouse_id`='$warehouse_id';";
 							$resultop		=	mysqli_query($conn, $sqlop);
 							$rowop			=	mysqli_fetch_array($resultop);
 							$op_date 		= 	$rowop['mb_date'];

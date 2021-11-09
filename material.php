@@ -261,7 +261,7 @@
                                             <th>Material</th>
                                             <th>Part no</th>
                                             <th>Specification</th>
-                                            <th>Min Stock</th>
+                                            <th>Location</th>
                                             <th>Unit</th>
                                             <th>Action</th>
                                         </tr>
@@ -289,7 +289,7 @@
                                                     <td><?php echo $item['material_description']; ?></td>
                                                     <td><?php echo $item['part_no']; ?></td>
                                                     <td><?php echo $item['spec']; ?></td>
-                                                    <td><?php echo $item['material_min_stock']; ?></td>
+                                                    <td><?php echo $item['location']; ?></td>
                                                     <td><?php echo getDataRowByTableAndId('inv_item_unit', $item['qty_unit'])->unit_name; ?></td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm" onclick="openMaterialEditForm('<?php echo $item['id']; ?>');">

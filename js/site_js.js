@@ -431,6 +431,7 @@ function get5_2By1(level_1_id_l5, selector = false) {
         $('#item_name').val('');
         $('#part_no').val('');
         $('#spec').val('');
+        $('#location').val('');
         $('#qty_unit').val('');
         $('#material_min_stock').val('');
         $.ajax({
@@ -454,6 +455,7 @@ function get5_2By1(level_1_id_l5, selector = false) {
         $('#item_name').val('');
         $('#part_no').val('');
         $('#spec').val('');
+        $('#location').val('');
         $('#qty_unit').val('');
         $('#material_min_stock').val('');
     }

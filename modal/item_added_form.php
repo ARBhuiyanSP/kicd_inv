@@ -98,6 +98,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-sm-5" for="name">Location:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="location" placeholder="location" name="location">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Unit:</label>
                             <div class="col-sm-7">
                                 <select class="form-control" id="qty_unit" name="qty_unit" required>
