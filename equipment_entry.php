@@ -34,22 +34,6 @@ include 'header.php';
                         </div>
 						<div class="col-xs-3">
                             <div class="form-group">
-                                <label>Type</label>
-                                <select class="form-control" id="type_id" name="type_id" onchange="getSubCodeByParenId(this.value);">
-                                    <option value="">Select</option>
-                                    <?php
-                                    $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
-                                    if (isset($parentCats) && !empty($parentCats)) {
-                                        foreach ($parentCats as $pcat) {
-                                            ?>
-                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
-                                        <?php }
-                                    } ?>
-                                </select>
-                            </div>
-                        </div>
-						<div class="col-xs-3">
-                            <div class="form-group">
                                 <label>Project Name</label>
 								<select class="form-control" id="project_id" name="project_id" required>
                                     <option value="">Select</option>
@@ -79,7 +63,6 @@ include 'header.php';
 								<thead>
 									<tr>
 										<th>Equipment No</th>
-										<th>Type</th>
 										<th>Project Name</th>
 										<th>Action</th>
 									</tr>

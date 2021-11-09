@@ -11,10 +11,10 @@ if (isset($_POST['equipment_submit']) && !empty($_POST['equipment_submit'])) {
         */ 
         $equipment_id		= $_POST['equipment_id'];
         $equipment_no			= $_POST['equipment_no'];
-        $type_id		= $_POST['type_id'];     
+        //$type_id		= $_POST['type_id'];     
         $project_id	= $_POST['project_id'];     
                
-        $query = "INSERT INTO `equipments` (`equipment_id`,`equipment_no`,`type_id`,`project_id`) VALUES ('$equipment_id','$equipment_no','$type_id','$project_id')";
+        $query = "INSERT INTO `equipments` (`equipment_id`,`equipment_no`,`project_id`) VALUES ('$equipment_id','$equipment_no','$project_id')";
         $conn->query($query);
         
 		$_SESSION['success']    =   "Equipment Entry process have been successfully completed.";
