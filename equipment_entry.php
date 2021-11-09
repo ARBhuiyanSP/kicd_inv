@@ -76,10 +76,7 @@ include 'header.php';
                                             ?>
 									<tr>
 										<td><?php echo $data['equipment_no']; ?></td>
-										<td><?php 
-										$dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $data['type_id']);
-										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
-										?></td>
+										
 										<td><?php 
 										$dataresult =   getDataRowByTableAndId('projects', $data['project_id']);
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->name : '');
