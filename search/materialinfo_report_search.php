@@ -45,8 +45,9 @@
 				<table id="" class="table table-bordered table-striped ">
 					<thead>
 						<tr>
-							<th>Parent category</th>
-							<th>Sub category</th>
+							<th>Vehicle</th>
+							<th>Brand</th>
+							<th>Category</th>
 							<th>Material Code</th>
 							<th>Material Name</th>
 							<th>Unit</th>
@@ -67,7 +68,7 @@
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
 								?>
 							</td>
-							<td colspan="4"></td>
+							<td colspan="5"></td>
 						</tr>
 								<?php 
 									$material_id = $row['material_id'];
@@ -84,16 +85,44 @@
 										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
 										?>
 									</td>
+									<td colspan="4"></td>
+								</tr>
+								
+								<!------------level 3--------->
+								<?php 
+									$material_id = $row['material_id'];
+									$sqlall3	=	"SELECT * FROM inv_material WHERE `material_id` = '$material_id' GROUP BY `material_level3_id`;";
+									$resultall3 = mysqli_query($conn, $sqlall3);
+									while($rowall3=mysqli_fetch_array($resultall3))
+									{ ?>
+								
+								<tr>
+									<td></td>
+									<td></td>
+									<td>
+										<?php
+										$dataresult =   getDataRowByTableAndId('inv_material_level3', $rowall3['material_level3_id']);
+										echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : '');
+										?>
+									</td>
 									<td colspan="3"></td>
 								</tr>
+								<!------------level 3--------->
+								<!------------level 4--------->
+								
+								<!------------level 4--------->
+								
+								
+								
 										<?php 
-											$material_sub_id = $rowall['material_sub_id'];
-											$sqlmat	=	"SELECT * FROM inv_material WHERE `material_sub_id` = '$material_sub_id' GROUP BY `material_id_code`;";
+											$material_level3_id = $rowall3['material_level3_id'];
+											$sqlmat	=	"SELECT * FROM inv_material WHERE `material_level3_id` = '$material_level3_id' GROUP BY `material_id_code`;";
 											$resultmat = mysqli_query($conn, $sqlmat);
 											while($rowmat=mysqli_fetch_array($resultmat))
 											{ ?>
 										
 										<tr>
+											<td></td>
 											<td></td>
 											<td></td>
 											<td><?php echo $rowmat['material_id_code']; ?></td>
@@ -103,9 +132,9 @@
 
 											
 										</tr>
-								<?php } 
+								<?php  
 									} 
-								} 
+						} }}
 								?>
 					</tbody>
 				</table>
