@@ -50,6 +50,16 @@ if (isset($_POST['login_submit']) && !empty($_POST['login_submit'])) {
                 $_SESSION['logged']['warehouse_id']	=   $warehouse_id;
 
                 $_SESSION['logged']['status']		=   true;
+				
+				$history_param  =   (object)[
+					'user_id'   =>  $_SESSION['logged']['user_id'],
+					'log_time'   =>  date('Y-m-d H:i:s'),
+					'log_type'   =>  'login',
+					'log_date'   =>  date('Y-m-d'),
+				];
+
+				process_log_information($history_param);
+				
                 header("location: dashboard.php");
                 exit();
             }else{
@@ -66,5 +76,6 @@ if (isset($_POST['login_submit']) && !empty($_POST['login_submit'])) {
             header("location: index.php");
             exit();
         }
+		
     }
 }

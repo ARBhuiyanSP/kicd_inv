@@ -130,7 +130,13 @@
 											<td></td>
 											<td></td>
 
+
 											<td><?php echo $rowmat['part_no']; ?></td>
+
+
+
+											<td><?php echo $rowmat['part_no']; ?></td>
+
 
 											<td><?php echo $rowmat['material_id_code']; ?></td>
 
