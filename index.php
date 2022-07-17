@@ -2,7 +2,7 @@
 include 'connection/connect.php';
 include 'helper/utilities.php';
 include 'log_history.php';
-include 'includes/login_process.php';
+include 'includes/login_process.php'; 
 ?>
 <style>
 body {
