@@ -54,12 +54,12 @@ display:none;
 					<tr style="background-color:#007BFF;color:#fff;">
 						<th width="10%">Category</th>
 						<th width="10%">Sub Category</th>
-						<th width="10%">Material Code</th>
+						<th width="15%">Material Code</th>
 						<th width="20%">Material Name</th>
 						<th width="15%">Part No</th>
 						<th width="15%">Spec</th>
-						<th width="10%">Unit</th>
-						<th width="10%">OP Stock</th>
+						<th width="7%">Unit</th>
+						<th width="8%">Qty</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -125,6 +125,7 @@ display:none;
 								$mbin_qty 		= $rowop['mbin_qty'];
 								$mbin_val 		= $rowop['mbin_val'];
 								$submit_name	= 'op_edit';
+								$button_name	= 'Update Data';
 								if($mbin_qty > 0){
 									$validation 	= 'readonly';
 									$submit			= 'disabled';
@@ -138,6 +139,7 @@ display:none;
 								$validation 	= '';
 								$submit			= '';
 								$submit_name	= 'op_submit';
+								$button_name	= 'Save Data';
 							}
 							?>
 							
@@ -156,7 +158,7 @@ display:none;
 					<input type="hidden" name="warehouse_id" value="<?php echo $warehouse_id; ?>">
 			<div class="col-xs-12">
 				<div class="form-group">
-					<input type="submit" name="<?php echo $submit_name; ?>" id="submit" class="btn btn-block btn-info" style="" value="SAVE DATA" <?php echo $submit; ?>/>    
+					<input type="submit" name="<?php echo $submit_name; ?>" id="submit" class="btn btn-block btn-info" style="" value="<?php echo $button_name; ?>" <?php echo $submit; ?>/>    
 				</div>
 			</div>
     </form>

@@ -83,7 +83,7 @@ if(isset($_GET['submit'])){
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
-							<h5>CTED CHATTOGRAM</h5> 
+							<h5>KICD, DHAKA</h5> 
 							<span>Equipments History Report</span></br>
 							<span style="font-size:18px;font-weight:bold;">Equipment Name : <?php echo $equipments; ?></span></br>
 							From <span class="dtext"><?php echo date("jS F Y", strtotime($from_date));?></span> To  <span class="dtext"><?php echo date("jS F Y", strtotime($to_date));?> </span><br>
@@ -117,7 +117,7 @@ if(isset($_GET['submit'])){
 						?>
 						<tr>
 							<td><?php echo date("j M y", strtotime($rowall['issue_date']));?></td>
-							<td><?php echo $rowall['issue_id']; ?></td>
+							<td><a href="issue-view.php?no=<?php echo $rowall['issue_id']; ?>"><?php echo $rowall['issue_id']; ?></a></td>
 							<td><?php 
 								$dataresult =   getDataRowByTableAndId('inv_material', $rowall['material_name']);
 								echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_description : '');
