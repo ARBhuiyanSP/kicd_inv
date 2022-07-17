@@ -2,7 +2,7 @@
       <footer class="sticky-footer">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright © Saif ERP <?php echo date('Y') ?></span>
+            <span>Copyright © Saif Powertec Ltd <?php echo date('Y') ?></span>
           </div>
         </div>
       </footer>
@@ -35,7 +35,8 @@
         </div>
       </div>
     </div>
-  </div>    
+  </div> 
+  
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-ui.js"></script>
     <script type="text/javascript" src="js/jquery.validate.min.js"></script>

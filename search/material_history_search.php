@@ -94,7 +94,7 @@ if(isset($_GET['submit'])){
 					<center>
 						<p>
 							<img src="images/Saif_Engineering_Logo_165X72.png" height="50px;"/><br>
-							<h5>CTED CHATTOGRAM</h5> 
+							<h5>KICD, DHAKA</h5> 
 							<span>Material History Report</span></br>
 							<?php 
 								$material_id_code = $material_name;
@@ -119,7 +119,6 @@ if(isset($_GET['submit'])){
 							<th>In QTY</th>
 							<th>Out QTY</th>
 							<th>Stock QTY</th>
-							<th>Remarks</th>
 
 						</tr>
 					</thead>
@@ -142,7 +141,14 @@ if(isset($_GET['submit'])){
 						?>
 						<tr>
 							<td><?php echo date("j M y", strtotime($rowall['mb_date']));?></td>
-							<td><?php echo $rowall['mb_ref_id']; ?></td>
+							<td>
+							<?php if($rowall['mbtype'] == 'Receive'){ ?>
+							<a href="receive-view.php?no=<?php echo $rowall['mb_ref_id']; ?>"><?php echo $rowall['mb_ref_id']; ?></a>
+							<?php }else if($rowall['mbtype'] == 'Issue'){ ?>
+							<a href="issue-view.php?no=<?php echo $rowall['mb_ref_id']; ?>"><?php echo $rowall['mb_ref_id']; ?></a>
+							<?php } ?>
+							
+							</td>
 							
 							<!-- <td><?php //echo getDataRowByTableAndId('inv_item_unit', $rowall['mbunit_id'])->unit_name; ?></td> -->
 							<td><?php echo getDataRowByTableAndId('inv_item_unit', $rowmat['qty_unit'])->unit_name;?>
@@ -152,8 +158,6 @@ if(isset($_GET['submit'])){
 							<td style="text-align:right;"><?php echo $rowall['mbout_qty']; ?></td>
 							<td style="text-align:right;"><?php echo $balance; ?></td>
 							
-							
-							<td></td>
 						</tr>
 						<?php } ?>
 						<tr style="text-align:right;font-weight:bold;">
@@ -181,7 +185,6 @@ if(isset($_GET['submit'])){
 								?>
 							</td>
 							<td><?php echo $totalIn-$totalOut ; ?></td>
-							<td></td>
 						</tr>
 					</tbody>
 				</table>
