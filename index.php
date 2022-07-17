@@ -1,8 +1,5 @@
 <?php session_start(); 
 include 'connection/connect.php';
-
-include 'includes/login_process.php';
-
 include 'helper/utilities.php';
 include 'log_history.php';
 include 'includes/login_process.php'; 
