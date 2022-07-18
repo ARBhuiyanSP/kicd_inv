@@ -20,25 +20,25 @@ include 'header.php';
             <div class="form-group">
                 <form action="" method="post" name="add_name" id="add_name">
                     <div class="row" id="div1" style="">
-						<div class="col-xs-3">
+						<div class="col-xs-4">
                             <div class="form-group">
                                 <label>First Name</label>
                                 <input type="text" name="first_name" id="first_name" class="form-control">
                             </div>
                         </div>
-						<div class="col-xs-3">
+						<div class="col-xs-4">
                             <div class="form-group">
                                 <label>Last Name</label>
                                 <input type="text" name="last_name" id="last_name" class="form-control">
                             </div>
                         </div>
-						<div class="col-xs-3">
+						<div class="col-xs-4">
                             <div class="form-group">
                                 <label>Employee ID</label>
                                 <input type="text" name="employee_id" id="employee_id" class="form-control">
                             </div>
                         </div>
-						<div class="col-xs-3">
+						<div class="col-xs-5">
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="text" name="email" id="email" class="form-control" required >
@@ -56,7 +56,7 @@ include 'header.php';
                             </div>
                         </div>
 						<input type="hidden" name="password" id="password" value="123456">
-						<div class="col-xs-3">
+						<div class="col-xs-4">
                             <div class="form-group">
                                 <label>Warehouse</label>
                                 <select class="form-control" id="warehouse_id" name="warehouse_id" required>
