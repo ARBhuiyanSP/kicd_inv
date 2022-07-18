@@ -103,7 +103,7 @@ include 'header.php';
 										<td><?php echo $data['employee_id']; ?></td>
 										<td><?php echo $data['email']; ?></td>
 										<td>
-											<a href="#"><i class="fas fa-edit text-success"></i></a>
+											<a href="#"><i class="fas fa-eye text-success"></i></a>
 											<a href="#"><i class="fa fa-trash text-danger"></i></a>
 										</td>
 									</tr>
