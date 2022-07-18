@@ -34,9 +34,20 @@ include 'header.php';
                         </div>
 						<div class="col-xs-3">
                             <div class="form-group">
+                                <label>Type</label>
+                                <select class="form-control" id="type_id" name="type_id" onchange="getSubCodeByParenId(this.value);">
+                                    <option value="">Select</option>
+									<option value="ECH">ECH</option>
+									<option value="FORKLIFT">FORKLIFT</option>
+									<option value="RST">RST</option>
+									<option value="TT">TT</option>
+								</select>
+                            </div>
+                        </div>
+						<div class="col-xs-3">
+                            <div class="form-group">
                                 <label>Project Name</label>
 								<select class="form-control" id="project_id" name="project_id" required>
-                                    <option value="">Select</option>
                                     <?php
                                     $projectsData = getTableDataByTableName('projects');
                                     ;

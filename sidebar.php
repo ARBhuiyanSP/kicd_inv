@@ -39,7 +39,7 @@
             <span>Dashboard</span>
         </a>
     </li>
-	<?php if($_SESSION['logged']['user_type'] !== 'whm') {?>
+	<?php if($_SESSION['logged']['user_type'] !== 'user') {?>
 	<?php if($_SESSION['logged']['user_type'] !== 'superAdmin') {?>
     <li class="nav-item" style="background-color:#007BFF;">
         <span class="nav-link" href="#">
@@ -80,10 +80,10 @@
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Euipments</span>
             </a>
-            <!-- <a class="dropdown-item" href="user_entry.php">
+            <a class="dropdown-item" href="user_entry.php">
                 <i class="fa fa-bullseye" aria-hidden="true" style="color: #007BFF;"></i>
                 <span class="sub_menu_text_design"> Users</span>
-            </a> -->
+            </a>
         </div>
     </li>
 	

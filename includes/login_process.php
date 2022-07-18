@@ -38,6 +38,7 @@ if (isset($_POST['login_submit']) && !empty($_POST['login_submit'])) {
                 $fname      	=   $row->first_name;
                 $lname      	=   $row->last_name;
                 $user_id    	=   $row->id;
+                $employee_id    =   $row->employee_id;
                 $user_type		=   $row->user_type;
                 $project_id		=   $row->project_id;
                 $warehouse_id	=   $row->warehouse_id;
@@ -45,6 +46,7 @@ if (isset($_POST['login_submit']) && !empty($_POST['login_submit'])) {
                 $_SESSION['success']                =   $fname.' '.$lname." have successfully loggedin!";
                 $_SESSION['logged']['user_name']    =   $fname.' '.$lname;
                 $_SESSION['logged']['user_id']      =   $user_id;
+                $_SESSION['logged']['employee_id']  =   $employee_id;
                 $_SESSION['logged']['user_type']	=   $user_type;
                 $_SESSION['logged']['project_id']	=   $project_id;
                 $_SESSION['logged']['warehouse_id']	=   $warehouse_id;
@@ -63,7 +65,7 @@ if (isset($_POST['login_submit']) && !empty($_POST['login_submit'])) {
                 header("location: dashboard.php");
                 exit();
             }else{
-                $error_status                       =   true;
+                $error_status   =   true;
                 $_SESSION['error_message']['password_empty']     =   'Password did not matched.';
                 $_SESSION['error']                               =   "Login credential was not correct.";
                 header("location: index.php");
