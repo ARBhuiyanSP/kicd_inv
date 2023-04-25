@@ -428,7 +428,9 @@ function get5_2By1(level_1_id_l5, selector = false,auto_select=false) {
     if (level_1_id_l5) {
         
         var same_level = $("#level_1_id_l5 option:selected").attr("attr_same_level");
+
         if(same_level ==1 && auto_select ==false){
+          
             $.ajax({
                     url: baseUrl + "includes/item_process.php?process_type=get5__3_by_2_same_level",
                     type: 'POST',
@@ -436,22 +438,28 @@ function get5_2By1(level_1_id_l5, selector = false,auto_select=false) {
                     async:false,
                     success: function(response) {
                         var data = JSON.parse(response);
-                        
+                        var sub_category_option=``;
                         if(data?.length > 0){
+                            for (var i = 0; i < data?.length; i++) {
+                               sub_category_option +=`<option value="${data[i]?.lev2id}">${data[i]?.material_sub_description}</option>`;
+                            }
                             var single_data = data[0];
                             
-                            var lev1_id = single_data.lev1_id;
-                            $("#level_2_id_l5").val(lev1_id).change();
-                            var lev2id = single_data.lev2id;
-                            $("#level_2_id_l5").val(lev2id).change();
-                            
+                            var lev1_id = single_data.lev2id;
                             var lev3_id = single_data.lev3_id;
-                            $("#material_level3_id").val(lev3_id).change();
                             var lev4_id = single_data.lev4_id;
-                            $("#material_level4_id").val(lev4_id).change();
-                            //  console.log(" lev4_id "+lev4_id)
-                            // getMatCodeBySubId(lev4_id)
+                            var level_2_id_l5 =lev1_id
                         }
+
+                        $(document).find("#level_2_id_l5").html(sub_category_option);
+
+                            $(document).find("#level_2_id_l5").val(level_2_id_l5).change();
+                            $(document).find("#material_level3_id").val(lev3_id).change();
+                            var lev4_id = single_data.lev4_id;
+                            $(document).find("#material_level4_id").val(lev4_id).change();
+
+
+
                     }
                 });
         }else{
@@ -499,7 +507,7 @@ function get5_2By1(level_1_id_l5, selector = false,auto_select=false) {
 
 function get5_3By2(level_2_id_l5, selector = false) {
     if (level_2_id_l5) {
-
+           // alert("Second Level"+level_2_id_l5);
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get5__4_by_3",
             type: 'POST',
@@ -507,12 +515,13 @@ function get5_3By2(level_2_id_l5, selector = false) {
             data: 'level_2_id_l5=' + level_2_id_l5,
             async:false,
             success: function(response) {
+                console.log(response)
                 if (selector) {
-                    $('#' + selector).html(response);
+                    $(document).find('#' + selector).html(response);
                 } else {
-                    $('#material_level3_id').html(response);
+                    $(document).find('#material_level3_id').html(response);
                 }
-                alert(1);
+                
             }
         });
     } else {
@@ -522,7 +531,9 @@ function get5_3By2(level_2_id_l5, selector = false) {
 
 function get5_4By3(material_level3_id, selector = false) {
     if (material_level3_id) {
+         //alert("Third Level "+material_level3_id)
         $.ajax({
+
             url: baseUrl + "includes/item_process.php?process_type=get5__5_by_4",
             type: 'POST',
             dataType: 'html',
@@ -534,7 +545,7 @@ function get5_4By3(material_level3_id, selector = false) {
                 } else {
                     $('#material_level4_id').html(response);
                 }
-                alert(2)
+                
             }
         });
     } else {
