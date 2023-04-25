@@ -19,7 +19,7 @@
                                     if (isset($parentCats) && !empty($parentCats)) {
                                         foreach ($parentCats as $pcat) {
                                             ?>
-                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['category_description'] ?></option>
+                                            <option value="<?php echo $pcat['id'] ?>" attr_same_level="<?php echo $pcat['same_level']  ?>"><?php echo $pcat['category_description'] ?></option>
                                         <?php }
                                     } ?>
                                 </select>

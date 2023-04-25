@@ -21,6 +21,13 @@
                                 <input type="text" class="form-control" id="parent_name" placeholder="name" name="name">
                             </div>
                         </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="control-label col-sm-5" for="name">All Level Same:</label>
+                            <div class="col-sm-7">
+                                <input type="checkbox" name="same_level" class="form-control">
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer modal_footer_custom_background">

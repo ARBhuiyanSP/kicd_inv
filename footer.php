@@ -37,23 +37,23 @@
     </div>
   </div> 
   
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.js"></script>
-    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
-    <script src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js?v=2"></script>
+    <script type="text/javascript" src="js/jquery-ui.js?v=2"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js?v=2"></script>
+    <script src="js/bootstrap.bundle.min.js?v=2"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/Chart.min.js"></script>
-    <script src="js/jquery.dataTables.js"></script>
-    <script src="js/dataTables.bootstrap4.min.js"></script>
-    <script src="js/sweetalert.min.js"></script>
+    <script src="js/jquery.easing.min.js?v=2"></script>
+    <script src="js/Chart.min.js?v=2"></script>
+    <script src="js/jquery.dataTables.js?v=2"></script>
+    <script src="js/dataTables.bootstrap4.min.js?v=2"></script>
+    <script src="js/sweetalert.min.js?v=2"></script>
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
+    <script src="js/sb-admin.min.js?v=2"></script>
     
-    <script type="text/javascript" src="js/site_url.js"></script>
-    <script type="text/javascript" src="js/site_js.js"></script>
-    <script src="js/demo/chart-area-demo.js"></script>
+    <script type="text/javascript" src="js/site_url.js?v=2"></script>
+    <script type="text/javascript" src="js/site_js.js?v=1.1.2.9"></script>
+    <script src="js/demo/chart-area-demo.js?v=2"></script>
     <script type="text/javascript" type="text/javascript">
         jQuery( document ).ready(function( $ ) {
             $('#dataTable').DataTable();

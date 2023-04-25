@@ -11,6 +11,7 @@ function openModal(modalId) {
             url: baseUrl + "includes/item_process.php?process_type=get_parent_category",
             type: 'POST',
             dataType: 'html',
+            async:false,
             success: function(response) {
                 $('#' + modalId).modal('show');
                 $('#parent_item_id').html(response);
@@ -423,30 +424,64 @@ function getLevel3BySub(level_2_id, selector = false) {
 }
 /*-----------level 4-----------*/
 /*-----------level 5-----------*/
-function get5_2By1(level_1_id_l5, selector = false) {
+function get5_2By1(level_1_id_l5, selector = false,auto_select=false) {
     if (level_1_id_l5) {
-        $('#material_level3_id').val('');
-        $('#material_level4_id').val('');
-        $('#item_code').val('');
-        $('#item_name').val('');
-        $('#part_no').val('');
-        $('#spec').val('');
-        $('#location').val('');
-        $('#qty_unit').val('');
-        $('#material_min_stock').val('');
-        $.ajax({
-            url: baseUrl + "includes/item_process.php?process_type=get5__3_by_2",
-            type: 'POST',
-            dataType: 'html',
-            data: 'level_1_id_l5=' + level_1_id_l5,
-            success: function(response) {
-                if (selector) {
-                    $('#' + selector).html(response);
-                } else {
-                    $('#level_2_id_l5').html(response);
-                }
-            }
-        });
+        
+        var same_level = $("#level_1_id_l5 option:selected").attr("attr_same_level");
+        if(same_level ==1 && auto_select ==false){
+            $.ajax({
+                    url: baseUrl + "includes/item_process.php?process_type=get5__3_by_2_same_level",
+                    type: 'POST',
+                    data: 'level_1_id_l5=' + level_1_id_l5,
+                    async:false,
+                    success: function(response) {
+                        var data = JSON.parse(response);
+                        
+                        if(data?.length > 0){
+                            var single_data = data[0];
+                            
+                            var lev1_id = single_data.lev1_id;
+                            $("#level_2_id_l5").val(lev1_id).change();
+                            var lev2id = single_data.lev2id;
+                            $("#level_2_id_l5").val(lev2id).change();
+                            
+                            var lev3_id = single_data.lev3_id;
+                            $("#material_level3_id").val(lev3_id).change();
+                            var lev4_id = single_data.lev4_id;
+                            $("#material_level4_id").val(lev4_id).change();
+                            //  console.log(" lev4_id "+lev4_id)
+                            // getMatCodeBySubId(lev4_id)
+                        }
+                    }
+                });
+        }else{
+            $('#material_level3_id').val('');
+                $('#material_level4_id').val('');
+                $('#item_code').val('');
+                $('#item_name').val('');
+                $('#part_no').val('');
+                $('#spec').val('');
+                $('#location').val('');
+                $('#qty_unit').val('');
+                $('#material_min_stock').val('');
+                $.ajax({
+                    url: baseUrl + "includes/item_process.php?process_type=get5__3_by_2",
+                    type: 'POST',
+                    dataType: 'html',
+                    data: 'level_1_id_l5=' + level_1_id_l5,
+                    async:false,
+                    success: function(response) {
+                        if (selector) {
+                            $('#' + selector).html(response);
+                        } else {
+                            $('#level_2_id_l5').html(response);
+                        }
+                    }
+                });
+        }
+        console.log(same_level);
+
+        
     } else {
         $('#level_2_id_l5').val('');
         $('#material_level3_id').val('');
@@ -464,17 +499,20 @@ function get5_2By1(level_1_id_l5, selector = false) {
 
 function get5_3By2(level_2_id_l5, selector = false) {
     if (level_2_id_l5) {
+
         $.ajax({
             url: baseUrl + "includes/item_process.php?process_type=get5__4_by_3",
             type: 'POST',
             dataType: 'html',
             data: 'level_2_id_l5=' + level_2_id_l5,
+            async:false,
             success: function(response) {
                 if (selector) {
                     $('#' + selector).html(response);
                 } else {
                     $('#material_level3_id').html(response);
                 }
+                alert(1);
             }
         });
     } else {
@@ -489,12 +527,14 @@ function get5_4By3(material_level3_id, selector = false) {
             type: 'POST',
             dataType: 'html',
             data: 'material_level3_id=' + material_level3_id,
+            async:false,
             success: function(response) {
                 if (selector) {
                     $('#' + selector).html(response);
                 } else {
                     $('#material_level4_id').html(response);
                 }
+                alert(2)
             }
         });
     } else {
@@ -511,6 +551,7 @@ function openMaterialEditForm(edit_id) {
         type: 'POST',
         dataType: 'html',
         data: 'edit_id=' + edit_id,
+        async:false,
         success: function(response) {
             $('#item_edit_form').modal('show');
             $('#material_edit_data_section').html(response);

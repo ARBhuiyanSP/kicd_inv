@@ -502,6 +502,38 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get5__3_by_2'){
     }
 }
 
+if(isset($_GET['process_type']) && $_GET['process_type'] == 'get5__3_by_2_same_level'){
+    include '../connection/connect.php';
+    include '../helper/utilities.php';
+    $level_1_id_l5      =    $_POST['level_1_id_l5'];
+   global $conn;
+    $dataContainer  =   [];
+    $sql = " SELECT lev1.id as lev1_id,lev1.category_description,
+lev2.id as lev2id,lev2.material_sub_description,
+lev3.id as lev3_id,lev3.material_level3_description,
+lev4.id as lev4_id,lev4.material_level4_description
+FROM inv_materialcategorysub AS lev1
+INNER JOIN inv_materialcategory AS lev2 ON lev1.id=lev2.category_id
+INNER JOIN inv_material_level3 AS lev3 ON lev3.category_sub_id=lev2.id
+INNER JOIN inv_material_level4 AS lev4 ON lev4.level3_id=lev3.id
+WHERE lev1.id=".$level_1_id_l5." ";
+$result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // output data of each row
+        if (isset($dataType) && $dataType == 'obj') {
+            while ($row = $result->fetch_object()) {
+                $dataContainer[] = $row;
+            }
+        } else {
+            while ($row = $result->fetch_assoc()) {
+                $dataContainer[] = $row;
+            }
+        }
+    }
+    echo json_encode($dataContainer);
+}
+
 if(isset($_GET['process_type']) && $_GET['process_type'] == 'get5__4_by_3'){
     include '../connection/connect.php';
     include '../helper/utilities.php';
@@ -723,6 +755,8 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
     include '../connection/connect.php';
     $catType   =   $_POST['cat_type'];
     $data_type  =   $_POST['data_type'];
+    
+
     global $conn;
     $sql            =   '';
     $defaultCode    =   '';    
@@ -742,6 +776,10 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
             }else{
                 $defaultCode    =  '01-00-00-00-000';
             }
+
+
+
+
             break;
         case 'sub':
             $psql= "SELECT * FROM inv_materialcategorysub where id=".$_POST['parent_cat'];

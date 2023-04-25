@@ -27,50 +27,50 @@
                     <div class="row" id="div1" style="">
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>Voucher Date</label>
+                                <label>Inv. Date</label>
                                 <input type="text" autocomplete="off" name="mrr_date" id="mrr_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>Voucher No</label>
+                                <label>Inv. No</label>
                                 <input type="text" name="mrr_no" id="mrr_no" class="form-control" value="" required >
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>Purchase ID</label>
+                                <label>PO No/Order No</label>
                                 <input type="text" name="purchase_id" id="purchase_id" class="form-control">
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label>Purchase Date</label>
+                                <label>PO/Order Date</label>
                                 <input type="text" autocomplete="off" name="Purchase_date" id="Purchase_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">	
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label for="id">Supplier Challan No</label>
+                                <label for="id">Packing No</label>
                                 <input type="text" name="challan_no" id="challan_no" class="form-control">
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label for="id">Challan Date</label>
+                                <label for="id">Packing Date</label>
                                 <input type="text" autocomplete="off" name="challan_date" id="challan_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label for="id">Requisition No.</label>
+                                <label for="id">RLP No.</label>
                                 <input type="text" name="requisition_no" id="requisition_no" class="form-control">
 								<!-- <input type="text" id="requisition_no" name="requisition_no" class="form-control" onkeypress="return event.charCode > 47 && event.charCode < 58;" pattern="[0-9]{5}" required></input> -->
                             </div>
                         </div>
                         <div class="col-xs-2">
                             <div class="form-group">
-                                <label for="id">Requisition Date</label>
+                                <label for="id">RLP Date</label>
                                 <input type="text" autocomplete="off" name="requisition_date" id="requisition_date" class="form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
                             </div>
                         </div>
