@@ -250,29 +250,50 @@
                     </div>
                     <h3>Material</h3>
                     <div class="row">
-                        <div class='col-md-10'>
+                        <div  style="width:100%;text-align: right;margin-bottom: 10px;">
+                            <button class="btn btn-flat btn-info " onclick="openModal('item_added_form');"><i class="fa fa-plus"></i> Material</button>
+                        </div>
+                        <div class='col-md-12'>
                             <div class="table-responsive data-table-wrapper">
                                 <table id="example" class="table table-condensed table-hover table-bordered site_custome_table">
                                     <thead>
                                         <tr>
+                                            <th>ID</th>
+                                            <th>Action</th>
                                             <th>Equipment</th>
                                             <th>Equipt.Brand</th>
                                             <th>Material Code</th>
                                             <th>Material</th>
                                             <th>Part no</th>
+                                            <th>Old Part No</th>
                                             <th>Specification</th>
                                             <th>Location</th>
                                             <th>Unit</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody id="item_category_body">
                                         <?php
-                                        $item_details = getTableDataByTableName('inv_material', '', 'material_description');
+                                        $item_details = getTableDataByTableName('inv_material', '', 'id');
                                         if (isset($item_details) && !empty($item_details)) {
                                             foreach ($item_details as $item) {
+                                                //echo "<pre>";
+                                                //print_r($item);
+                                                //echo "</pre>";
                                                 ?>
                                                 <tr>
+                                                 
+                                                    <td>
+                                                        <?php echo $item['id']; ?>
+                                                    </td>
+                                                        <td>
+                                                        <button title="Item Edit" type="button" class="btn btn-sm btn-default" onclick="openMaterialEditForm('<?php echo $item['id']; ?>');">
+                                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Add New Part No" type="button" class="btn btn-sm btn-info" onclick="addNewPartNumberModal('<?php echo $item['id']; ?>');">
+                                                           <i class="fa fa-plus" aria-hidden="true"></i>
+                                                        </button>
+                                                    </td>
                                                     <td>
                                                         <?php 
                                                         $dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $item['material_id']);
@@ -288,14 +309,11 @@
                                                     <td><?php echo $item['material_id_code']; ?></td>
                                                     <td><?php echo $item['material_description']; ?></td>
                                                     <td><?php echo $item['part_no']; ?></td>
+                                                    <td><?php echo $item["old_part_no"];?></td>
                                                     <td><?php echo $item['spec']; ?></td>
                                                     <td><?php echo $item['location']; ?></td>
                                                     <td><?php echo getDataRowByTableAndId('inv_item_unit', $item['qty_unit'])->unit_name; ?></td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm" onclick="openMaterialEditForm('<?php echo $item['id']; ?>');">
-                                                            <i class="fa fa-edit" aria-hidden="true"></i>
-                                                        </button>
-                                                    </td>
+                                                   
                                                 </tr>
                                                 <?php
                                             }
@@ -312,9 +330,7 @@
                                 </table>
                             </div><!--table-responsive-->
                         </div>
-                        <div class='col-md-2'>
-                            <button class="btn btn-flat btn-default pull-left" onclick="openModal('item_added_form');"><i class="fa fa-plus"></i> Material</button>
-                        </div>
+                        
                     </div>
                 </div>
             </div>

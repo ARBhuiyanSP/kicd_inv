@@ -1,24 +1,53 @@
 <?php
-function getTableDataByTableName($table, $order = 'asc', $column='id', $dataType = '') {
+function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataType = '') {
     global $conn;
     $dataContainer  =   [];
     $sql = "SELECT * FROM $table order by $column $order";
     $result = $conn->query($sql);
 
+    //Part Number Detail table data fetch
+    $sql_partno = "SELECT * FROM inv_material_partno_detail WHERE status=0 AND part_no !='' ";
+    $partno_result = $conn->query($sql_partno);
+    
+    $material_key_array=[];
+     while ($part_row = $partno_result->fetch_assoc()) {
+        $material_key_array[$part_row["inv_material_id"]][]=$part_row["part_no"];
+     }
+
+
+
     if ($result->num_rows > 0) {
         // output data of each row
         if (isset($dataType) && $dataType == 'obj') {
             while ($row = $result->fetch_object()) {
+                $inv_material_id = $row["id"];
+                $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
                 $dataContainer[] = $row;
             }
         } else {
             while ($row = $result->fetch_assoc()) {
+                $inv_material_id = $row["id"];
+                
+                $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
                 $dataContainer[] = $row;
             }
         }
     }
     return $dataContainer;
 }
+
+function oldPartNumberString($material_key_array,$inv_material_id){
+        $part_no_string='';
+        foreach ($material_key_array as $key => $value) {
+            if($key==$inv_material_id){
+               $part_no_string= implode(",", $value);
+            }
+        }
+        return $part_no_string;
+}
+
+
+
 function getwarehouseinfo($table, $order = 'asc', $column='id', $dataType = '') {
     global $conn;
     $dataContainer  =   [];

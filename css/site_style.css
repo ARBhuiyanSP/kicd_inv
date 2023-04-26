@@ -100,3 +100,14 @@ table.list-table-custom-style tr td {
     vertical-align: top;
 }
 
+footer.sticky-footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: calc(100% - 90px);
+    height: 40px;
+    background-color: #e9ecef;
+}
