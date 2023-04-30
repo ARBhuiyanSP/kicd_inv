@@ -42,7 +42,7 @@ include 'includes/user_process.php';
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="css/jquery-ui.css" rel="stylesheet">
-  <link href="css/site_style.css" rel="stylesheet">
+  <link href="css/site_style.css?v=1" rel="stylesheet">
   <link href="css/form-entry.css" rel="stylesheet">
   <link href="css/select2.min.css" rel="stylesheet">
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
