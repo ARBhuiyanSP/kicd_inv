@@ -158,8 +158,18 @@
                                                 $projectsData = get_product_with_category();
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
+                                                      
                                                         ?>
-                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?></option>
+                                                        <option value="<?php echo $data['id']; ?>">
+
+<?php
+
+// echo "<pre>";
+//                                                         print_r($data);
+//                                                         echo "</pre>";
+ ?>
+
+                                                            <?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['old_part_no']; ?> -<?php echo $data['spec']; ?></option>
                                                         <?php
                                                     }
                                                 }

@@ -11,7 +11,7 @@ function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataTyp
     
     $material_key_array=[];
      while ($part_row = $partno_result->fetch_assoc()) {
-        $material_key_array[$part_row["inv_material_id"]][]=$part_row["part_no"];
+        $material_key_array[$part_row["material_id_code"]][]=$part_row["part_no"];
      }
 
 
@@ -20,13 +20,13 @@ function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataTyp
         // output data of each row
         if (isset($dataType) && $dataType == 'obj') {
             while ($row = $result->fetch_object()) {
-                $inv_material_id = $row["id"];
+                $inv_material_id = $row["material_id_code"];
                 $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
                 $dataContainer[] = $row;
             }
         } else {
             while ($row = $result->fetch_assoc()) {
-                $inv_material_id = $row["id"];
+                $inv_material_id = $row["material_id_code"];
                 
                 $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
                 $dataContainer[] = $row;
@@ -229,8 +229,22 @@ function getDefaultCategoryCodeByWarehouseT($table, $fieldName, $modifier, $defa
 }
 
 function get_product_with_category() {
-    $final_array = [];
+$final_array = [];
     global $conn;
+
+     //Part Number Detail table data fetch
+    $sql_partno = "SELECT * FROM inv_material_partno_detail WHERE status=0 AND part_no !='' ";
+    $partno_result = $conn->query($sql_partno);
+    
+    $material_key_array=[];
+     while ($part_row = $partno_result->fetch_assoc()) {
+        $material_key_array[$part_row["material_id_code"]][]=$part_row["part_no"];
+     }
+     // end old part number
+//  echo "<pre>";
+// print_r($material_key_array);
+//  echo "<pre>";
+    
     $sql = "SELECT * FROM inv_materialcategorysub order by category_description asc";
     $presult = $conn->query($sql);
     if ($presult->num_rows > 0) {
@@ -249,6 +263,8 @@ function get_product_with_category() {
                     if ($mresult->num_rows > 0) {
                         while ($material    = $mresult->fetch_object()) {
                             $final_array[]  = [
+                                'old_part_no'=> oldPartNumberString($material_key_array,$material->material_id_code), 
+                                //old part number show
                                 'id'                    => $material->id,
                                 'parent_item_id'        => $material->material_id,
                                 'sub_item_id'           => $material->material_sub_id,
