@@ -109,7 +109,7 @@
                                                 if (isset($projectsData) && !empty($projectsData)) {
                                                     foreach ($projectsData as $data) {
                                                         ?>
-                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?></option>
+                                                        <option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['old_part_no']; ?> - <?php echo $data['spec']; ?></option>
                                                         <?php
                                                     }
                                                 }
@@ -211,7 +211,7 @@
                                     $projectsData = get_product_with_category();
                                     if (isset($projectsData) && !empty($projectsData)) {
                                         foreach ($projectsData as $data) {
-                                            ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['spec']; ?></option><?php
+                                            ?><option value="<?php echo $data['id']; ?>"><?php echo $data['material_name']; ?> - <?php echo $data['part_no']; ?> - <?php echo $data['old_part_no']; ?> - <?php echo $data['spec']; ?></option><?php
                                         }
                                     }
                                     ?></select></td><td><input type="text" name="material_id[]" id="material_id' + i + '" class="form-control" required readonly></td><td><input type="text" name="part_no[]" id="part_no' + i + '" class="form-control" required readonly></td><td><select class="form-control select2" id="unit' + i + '" name="unit[]' + i + '" required readonly onchange="getAppendItemCodeByParam(' + i + ",'inv_material'" + ",'material_id_code'" + ",'material_id''" + ",'qty_unit'" + ')"><option value="">Select</option><?php

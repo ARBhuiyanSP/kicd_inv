@@ -20,15 +20,20 @@ function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataTyp
         // output data of each row
         if (isset($dataType) && $dataType == 'obj') {
             while ($row = $result->fetch_object()) {
+                 if(isset($row["material_id_code"])){
                 $inv_material_id = $row["material_id_code"];
                 $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
+            }
                 $dataContainer[] = $row;
             }
         } else {
             while ($row = $result->fetch_assoc()) {
-                $inv_material_id = $row["material_id_code"];
+                if(isset($row["material_id_code"])){
+                    $inv_material_id = $row["material_id_code"];
                 
                 $row["old_part_no"] = oldPartNumberString($material_key_array,$inv_material_id);
+                }
+                
                 $dataContainer[] = $row;
             }
         }
@@ -67,6 +72,12 @@ function getwarehouseinfo($table, $order = 'asc', $column='id', $dataType = '') 
         }
     }
     return $dataContainer;
+}
+
+function newSpecialCharacter($str){
+    $res = str_replace( array( '\'', '"',
+      ',' , ';', '<', '>' ), ' ', $str);
+     return $res;
 }
 function getTableDataByTableNameWid($table, $order = 'asc', $column='id', $dataType = '') {
     global $conn;
