@@ -140,7 +140,7 @@
                         <div class="table-responsive">
                             <table class="table table-bordered" id="dynamic_field">
                                 <thead>
-                                <th>Material Name<span class="reqfield"> ***required</span></th>
+                                <th width="25%">Material Name<span class="reqfield"> ***required</span></th>
                                 <th>Material ID</th>
                                 <th width="10%">Unit</th>
                                 <th>Part No</th>
