@@ -1,4 +1,9 @@
 <!-- Modal -->
+
+<?php
+$category_resize_data = category_tree();
+ ?>
+
 <div class="modal fade" id="item_added_form" role="dialog">
     <form id="item_added_form_value">
         <div class="modal-dialog">
@@ -12,67 +17,26 @@
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Parent Category:</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="level_1_id_l5" name="parent_item_id" onchange="get5_2By1(this.value);">
-                                    <option value="">Select</option>
+                                <select class="form-control" id="level_1_id_l5" name="parent_item_id" onchange="getSubCodeByParenId(this.value,'item_code');">
+                                    <option value="0">Parent Category</option>
                                     <?php
-                                    $parentCats = getTableDataByTableName('inv_materialcategorysub', '', 'category_description');
-                                    if (isset($parentCats) && !empty($parentCats)) {
-                                        foreach ($parentCats as $pcat) {
-                                            ?>
-                                            <option value="<?php echo $pcat['id'] ?>" attr_same_level="<?php echo $pcat['same_level']  ?>"><?php echo $pcat['category_description'] ?></option>
-                                        <?php }
-                                    } ?>
+                                    $html = '';
+                                    function generateOptions($category_resize_data, $indent = 0) {
+                                        foreach ($category_resize_data as $key => $value) {
+                                            echo '<option value="' . $value['id'] . '">' . str_repeat('-', $indent * 2) . $value['id'].'-' .$value['category_description']. '</option>';
+                                            if (is_array($value['children']) && !empty($value['children'])) {
+                                                generateOptions($value['children'], $indent + 1);
+                                            }
+                                        }
+                                    }
+                                    
+                                    generateOptions($category_resize_data);
+                                    ?>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-5" for="parent_code">Sub Category:</label>
-                            <div class="col-sm-7">
-                                <select class="form-control" id="level_2_id_l5" name="sub_item_id" onchange="get5_3By2(this.value);">
-                                    <option value="">Select</option>
-                                    <?php
-                                    $parentCats = getTableDataByTableName('inv_materialcategory','','material_sub_description');
-                                    if (isset($parentCats) && !empty($parentCats)) {
-                                        foreach ($parentCats as $pcat) {
-                                            ?>
-                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_sub_description'] ?></option>
-                                        <?php }
-                                    } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
-                            <div class="col-sm-7">
-                                <select class="form-control" id="material_level3_id" name="material_level3_id" onchange="get5_4By3(this.value);">
-                                    <option value="">Select</option>
-                                    <?php
-                                    $parentCats = getTableDataByTableName('inv_material_level3','','material_level3_description');
-                                    if (isset($parentCats) && !empty($parentCats)) {
-                                        foreach ($parentCats as $pcat) {
-                                            ?>
-                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level3_description'] ?></option>
-                                        <?php }
-                                    } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-5" for="parent_code">Level-4:</label>
-                            <div class="col-sm-7">
-                                <select class="form-control" id="material_level4_id" name="material_level4_id" onchange="getMatCodeBySubId(this.value);">
-                                    <option value="">Select</option>
-                                    <?php
-                                    $parentCats = getTableDataByTableName('inv_material_level4','','material_level4_description');
-                                    if (isset($parentCats) && !empty($parentCats)) {
-                                        foreach ($parentCats as $pcat) {
-                                            ?>
-                                            <option value="<?php echo $pcat['id'] ?>"><?php echo $pcat['material_level4_description'] ?></option>
-                                        <?php }
-                                    } ?>
-                                </select>
-                            </div>
-                        </div>
+                        
+                        
                         <div class="form-group">
                             <label class="control-label col-sm-5" for="parent_code">Material Code:</label>
                             <div class="col-sm-7">

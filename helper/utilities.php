@@ -1,4 +1,38 @@
 <?php
+
+function buildTreeCateogy(array $category_resize_data, $parentId = 0) {
+    $branch = [];
+
+    foreach ($category_resize_data as $element) {
+        
+        if ($element['parent_id'] == $parentId) {
+            $children = buildTreeCateogy($category_resize_data, $element['id']);
+            if ($children) {
+                $element['children'] = $children;
+            }
+            $branch[] = $element;
+        }
+    }
+
+    return $branch;
+}
+
+
+function category_tree(){
+    global $conn;
+    $category_resize_data  =   [];
+    $sql = "SELECT * FROM inv_materialcategorysub order by _order ASC";
+    $result_cat = $conn->query($sql);
+    while ($row = $result_cat->fetch_assoc()) {
+        $category_resize_data[] = $row;
+    }
+
+    $data =  buildTreeCateogy($category_resize_data);
+    return $data;
+}
+
+
+
 function getTableDataByTableName($table, $order = 'DESC', $column='id', $dataType = '') {
     global $conn;
     $dataContainer  =   [];
@@ -191,6 +225,7 @@ function getDataRowIdAndTable($table){
 }
 
 function getDataRowByTableAndId($table, $id){
+    //echo $id;
     global $conn;
     $sql    = "SELECT * FROM $table where id=".$id;
     $result = $conn->query($sql);

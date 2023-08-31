@@ -53,9 +53,7 @@
     
     <script type="text/javascript" src="js/site_url.js?v=2"></script>
 
-    <script type="text/javascript" src="js/site_js.js?v=1.189"></script>
-
-    <script type="text/javascript" src="js/site_js.js?v=1.4"></script>
+    <script type="text/javascript" src="js/site_js.js?v=1.77"></script>
 
     <script src="js/demo/chart-area-demo.js?v=2"></script>
     <script type="text/javascript" type="text/javascript">

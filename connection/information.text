@@ -1,0 +1,10 @@
+1. Create New Table inv_material_partno_detail
+2. Create a Common Category for Every Level 
+3. Conditionaly Fillup All level category if using common category which is configarable.
+4. Add new Material and part number will be save also inv_material_partno_detail with status 1
+5. User can not edit part number in using material Edit Button if need to update new part number then use to Update part number button.
+6. If Part number Update then new part number will update inv_material table and also update inv_material_partno_detail table with status 1 and older all part number status updated by status 0.
+
+
+
+INSERT INTO `inv_material_partno_detail`(`inv_material_id`, `material_id_code`, `part_no`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) SELECT inv.id,inv.material_id_code,inv.part_no,1,1,1,NOW(),NOW() FROM inv_material AS inv;

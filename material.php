@@ -6,6 +6,10 @@
 
 }
 </style>
+
+<?php
+
+ ?> 
 <div class="container-fluid">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
@@ -54,37 +58,32 @@
                                                 ?>
                                                 <tr>
                                                  
-                                                    <td>
-                                                        <?php echo $item['id']; ?>
-                                                    </td>
-                                                        <td>
-                                                        <button title="Item Edit" type="button" class="btn btn-sm btn-default" onclick="openMaterialEditForm('<?php echo $item['id']; ?>');">
+                        <td>
+                            <?php echo $item['id']; ?>
+                        </td>
+    <td>
+  <button title="Item Edit" type="button" class="btn btn-sm btn-default" onclick="openMaterialEditForm('<?php echo $item['id']; ?>');">
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </button>
 
-                                                        <button title="Add New Part No" type="button" class="btn btn-sm btn-info" onclick="addNewPartNumberModal('<?php echo $item['id']; ?>');">
-                                                           <i class="fa fa-plus" aria-hidden="true"></i>
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <?php 
-                                                        $dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $item['material_id']);
-                                                        echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
-                                                        ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php
-                                                        $dataresult =   getDataRowByTableAndId('inv_materialcategory', $item['material_sub_id']);
-                                                        echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : '');
-                                                        ?>
-                                                    </td>
-                                                    <td><?php echo $item['material_id_code']; ?></td>
-                                                    <td><?php echo $item['material_description']; ?></td>
-                                                    <td><?php echo $item['part_no']; ?></td>
-                                                    <td><?php echo $item["old_part_no"];?></td>
-                                                    <td><?php echo $item['spec']; ?></td>
-                                                    <td><?php echo $item['location']; ?></td>
-                                                    <td><?php echo getDataRowByTableAndId('inv_item_unit', $item['qty_unit'])->unit_name; ?></td>
+        <button title="Add New Part No" type="button" class="btn btn-sm btn-info" onclick="addNewPartNumberModal('<?php echo $item['id']; ?>');">
+           <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+</td>
+<td>
+    <?php 
+    $dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $item['material_id']);
+    echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
+    ?>
+</td>
+<td></td>
+<td><?php echo $item['material_id_code']; ?></td>
+<td><?php echo $item['material_description']; ?></td>
+<td><?php echo $item['part_no']; ?></td>
+<td><?php echo $item["old_part_no"];?></td>
+<td><?php echo $item['spec']; ?></td>
+<td><?php echo $item['location']; ?></td>
+<td><?php echo getDataRowByTableAndId('inv_item_unit', $item['qty_unit'])->unit_name; ?></td>
                                                    
                                                 </tr>
                                                 <?php

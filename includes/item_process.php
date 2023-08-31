@@ -11,11 +11,13 @@ if (isset($_GET['process_type']) && $_GET['process_type'] == 'parent') {
     $message    =   'Current operation was successfully completed';
     $feedback   =   '';
     $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $parent_code = mysqli_real_escape_string($conn, $_POST['category_id']);
+    $parent_id = mysqli_real_escape_string($conn, $_POST['parent_id']);
+    $_order = mysqli_real_escape_string($conn, $_POST['_order']);
+    $parent_code = mysqli_real_escape_string($conn, $_POST['category_id'] ?? '');
     // check duplicate:
     $table = 'inv_materialcategorysub';
 //    $where = 'category_id=' . "$parent_code" . ' and category_description=' . "$name";
-    $where = "category_id='$parent_code' and category_description='$name'";
+    $where = "category_id='$parent_code' and LOWER(category_description)='".strtolower($name)."'";
     if(isset($_POST['parent_material_update_id']) && !empty($_POST['parent_material_update_id'])){
         $notWhere   =   "id!=".$_POST['parent_material_update_id'];
         $duplicatedata = isDuplicateData($table, $where, $notWhere);
@@ -28,11 +30,11 @@ if (isset($_GET['process_type']) && $_GET['process_type'] == 'parent') {
     } else {
         if (isset($_POST['parent_material_update_id']) && !empty($_POST['parent_material_update_id'])) {
             $edit_id = $_POST['parent_material_update_id'];
-            $sql = "UPDATE inv_materialcategorysub SET category_id='$parent_code',category_description='$name' WHERE id=$edit_id";
+            $sql = "UPDATE inv_materialcategorysub SET category_id='$parent_code',category_description='$name',parent_id= '$parent_id',_order='$_order' WHERE id=$edit_id";
             $status     =   'success';
             $message    =   'Data have been successfully updated!';
         } else {
-            $sql = "INSERT INTO inv_materialcategorysub (category_description, category_id) VALUES ('" . $name . "', '" . $parent_code . "')";
+            $sql = "INSERT INTO inv_materialcategorysub (category_description, category_id,parent_id,_order) VALUES ('" . $name . "', '" . $parent_code . "','".$parent_id."','".$_order."')";
             $status     =   'success';
             $message    =   'Data have been successfully inserted!';
         }
@@ -47,6 +49,49 @@ if (isset($_GET['process_type']) && $_GET['process_type'] == 'parent') {
     ];
     echo json_encode($data);
 }
+// if (isset($_GET['process_type']) && $_GET['process_type'] == 'parent') {
+//     include '../connection/connect.php';
+//     include '../helper/utilities.php';
+//     $status     =   'success';
+//     $message    =   'Current operation was successfully completed';
+//     $feedback   =   '';
+//     $name = mysqli_real_escape_string($conn, $_POST['name']);
+//     $parent_code = mysqli_real_escape_string($conn, $_POST['category_id']);
+//     // check duplicate:
+//     $table = 'inv_materialcategorysub';
+// //    $where = 'category_id=' . "$parent_code" . ' and category_description=' . "$name";
+//     $where = "category_id='$parent_code' and category_description='$name'";
+//     if(isset($_POST['parent_material_update_id']) && !empty($_POST['parent_material_update_id'])){
+//         $notWhere   =   "id!=".$_POST['parent_material_update_id'];
+//         $duplicatedata = isDuplicateData($table, $where, $notWhere);
+//     }else{
+//         $duplicatedata = isDuplicateData($table, $where);
+//     }
+//     if ($duplicatedata) {
+//         $status     =   'error';
+//         $message    =   'Current operation was faild. Duplicate data found!';
+//     } else {
+//         if (isset($_POST['parent_material_update_id']) && !empty($_POST['parent_material_update_id'])) {
+//             $edit_id = $_POST['parent_material_update_id'];
+//             $sql = "UPDATE inv_materialcategorysub SET category_id='$parent_code',category_description='$name' WHERE id=$edit_id";
+//             $status     =   'success';
+//             $message    =   'Data have been successfully updated!';
+//         } else {
+//             $sql = "INSERT INTO inv_materialcategorysub (category_description, category_id) VALUES ('" . $name . "', '" . $parent_code . "')";
+//             $status     =   'success';
+//             $message    =   'Data have been successfully inserted!';
+//         }
+//         if ($conn->query($sql) === TRUE) {
+//             $feedback = parent_category_table_json_response('parent_category');
+//         }
+//     }
+//     $data   =   [
+//         'status'    =>  $status,
+//         'message'   =>  $message,
+//         'data'      =>  $feedback,
+//     ];
+//     echo json_encode($data);
+// }
 function parent_category_table_json_response($tableName) {
     $feedback   =   '';
     $tableData = getTableDataByTableName('inv_materialcategorysub', '' , 'category_description');
@@ -165,9 +210,9 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
     */
 
     $parent_id          =   mysqli_real_escape_string($conn, $_POST['parent_item_id']);
-    $sub_item_id        =   mysqli_real_escape_string($conn, $_POST['sub_item_id']);
-    $material_level3_id =   mysqli_real_escape_string($conn, $_POST['material_level3_id']);
-    $material_level4_id =   mysqli_real_escape_string($conn, $_POST['material_level4_id']);
+    $sub_item_id        =   mysqli_real_escape_string($conn, $_POST['sub_item_id'] ?? 0);
+    $material_level3_id =   mysqli_real_escape_string($conn, $_POST['material_level3_id'] ?? 0);
+    $material_level4_id =   mysqli_real_escape_string($conn, $_POST['material_level4_id'] ?? 0);
     $item_code          =   mysqli_real_escape_string($conn, $_POST['item_code']);
     $name               =   mysqli_real_escape_string($conn, $_POST['name']);
     $part_no			=   mysqli_real_escape_string($conn, $_POST['part_no']);
@@ -193,7 +238,8 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
             /* $sql         = "UPDATE inv_material SET material_id_code='$item_code',material_id='$parent_id',material_sub_id='$sub_item_id',material_level3_id='$material_level3_id',material_level4_id='$material_level4_id',material_description='$name',spec='$spec',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id"; */
 			 $sql         = "UPDATE inv_material SET material_description='$name',spec='$spec',location='$location',material_min_stock='$material_min_stock',qty_unit='$qty_unit',part_no='$part_no' WHERE id=$edit_id";
             $status      = 'success';
-            $message     = 'Data have been successfully updated!';            
+            $message     = 'Data have been successfully updated!';
+           // $feedback = item_table_json_response('inv_material');            
         }else{
             $sql         = "INSERT INTO inv_material (material_id,material_sub_id,material_level3_id,material_level4_id,material_id_code,material_description,spec,location,material_min_stock,qty_unit,part_no) VALUES ('".$parent_id."','".$sub_item_id."','".$material_level3_id."','".$material_level4_id."', '".$item_code."','".$name."', '".$spec."', '".$location."', '".$material_min_stock."','".$qty_unit."','".$part_no."')";
 
@@ -202,6 +248,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
 
             $status      = 'success';
             $message     = 'Data have been successfully inserted!';
+            //$feedback = item_table_json_response('inv_material');
             
         }
         if ($conn->query($sql) === TRUE) {
@@ -211,7 +258,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'item'){
             $insert_sql=" INSERT INTO inv_material_partno_detail( inv_material_id, material_id_code, part_no, status, created_by, updated_by, created_at, updated_at) VALUES ('$material_update_id','$item_code','$part_no','1','$user_id','$user_id','$date','$date') ";
             $conn->query($insert_sql);
 
-            $feedback = item_table_json_response('inv_material');
+           $feedback = item_table_json_response('inv_material'); 
 
         }
     }
@@ -484,8 +531,9 @@ function item_table_json_response($tableName) {
             $dataresult                 =  getDataRowByTableAndId('inv_materialcategorysub', $data['material_id']);
             $category_description       = (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : '');
             
-            $datasubresult              =  getDataRowByTableAndId('inv_materialcategory', $data['material_sub_id']);
-            $sub_category_description   =  (isset($dataresult) && !empty($dataresult) ? $datasubresult->material_sub_description : '');
+            // $datasubresult              =  getDataRowByTableAndId('inv_materialcategory', $data['material_sub_id']);
+            // $sub_category_description   =  (isset($dataresult) && !empty($dataresult) ? $datasubresult->material_sub_description : '');
+            $sub_category_description   =  '';
             
             $material_id_code           =  $data['material_id_code'];
             $material_description       =  $data['material_description'];
@@ -500,12 +548,8 @@ function item_table_json_response($tableName) {
                         <i class=\"fa fa-plus\" aria-hidden=\"true\"></i>
                     </button>
                 </td>
-                <td>
-                   $id 
-                </td>
-                <td>
-                    $category_description
-                </td>
+                <td>$id </td>
+                <td>$category_description</td>
                 <td>$sub_category_description</td>
                 <td>$material_id_code</td>
                 <td>$material_description</td>
@@ -661,30 +705,9 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'material_edit'){
 					 <input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_id)){ $dataresult =   getDataRowByTableAndId('inv_materialcategorysub', $editData->material_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->category_description : ''); } ?>"readonly> 
                 </div>
             </div>
-			<div class="form-group">
-                <label class="control-label col-sm-5" for="parent_code">Sub Category:</label>
-                <div class="col-sm-7">
-					<input type="hidden" class="form-control"  placeholder="name" name="sub_item_id" value="<?php if(isset($editData->material_sub_id)){ echo $editData->material_sub_id; } ?>">
-					<input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_sub_id)){ 
-					$dataresult =   getDataRowByTableAndId('inv_materialcategory', $editData->material_sub_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_sub_description : ''); } ?>"readonly>
-                </div>
-            </div>
-			<div class="form-group">
-                <label class="control-label col-sm-5" for="parent_code">Level-3:</label>
-                <div class="col-sm-7">
-					<input type="hidden" class="form-control"  placeholder="name" name="material_level3_id" value="<?php if(isset($editData->material_level3_id)){ echo $editData->material_level3_id; } ?>">
-					<input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_level3_id)){ 
-					$dataresult =   getDataRowByTableAndId('inv_material_level3', $editData->material_level3_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level3_description : ''); } ?>"readonly>
-                </div>
-            </div>
-			<div class="form-group">
-                <label class="control-label col-sm-5" for="parent_code">Level-4:</label>
-                <div class="col-sm-7">
-					<input type="hidden" class="form-control"  placeholder="name" name="material_level4_id" value="<?php if(isset($editData->material_level4_id)){ echo $editData->material_level4_id; } ?>">
-					<input type="text" class="form-control"  placeholder="name" value="<?php if(isset($editData->material_level4_id)){ 
-					$dataresult =   getDataRowByTableAndId('inv_material_level4', $editData->material_level4_id); echo (isset($dataresult) && !empty($dataresult) ? $dataresult->material_level4_description : ''); } ?>"readonly>
-                </div>
-            </div>
+			
+			
+			
             <div class="form-group">
                 <label class="control-label col-sm-5" for="parent_code">Material Code:</label>
                 <div class="col-sm-7">
@@ -807,6 +830,40 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'parent_material_edi
     $edit_id    =   $_POST['edit_id'];
     $editData   =   getDataRowByTableAndId('inv_materialcategorysub',$edit_id);
 ?>
+        <div class="form-group mt-3">
+                            <label class="control-label col-sm-5" for="parent_id">Category:</label>
+                            <div class="col-sm-7">
+                                <select id="parent_id" class="form-control "
+                                  name="parent_id" >
+                                  <option value="0">Parent Category</option>
+                                    <?php
+                                    $category_resize_data = category_tree();
+                                    $html = '';
+                                    function generateOptions($category_resize_data, $indent = 0,$editData) {
+                                        foreach ($category_resize_data as $key => $value) {
+                                            echo '<option  value="'.$value['id'].'" ';
+                                           
+                                            if($value['id']==$editData->parent_id){
+                                                echo 'selected="selected" ';
+                                            }
+                                           
+                                            
+                                           echo  ' >';
+                                            echo  str_repeat('-', $indent * 2) . $value['id'].'-' .$value['category_description']. '</option>';
+                                            if (isset($value['children']) && is_array($value['children']) && !empty($value['children'])) {
+                                                generateOptions($value['children'], $indent + 1,$editData);
+                                            }
+                                        }
+                                    }
+                                    
+                                    generateOptions($category_resize_data,$indent = 0,$editData);
+                                    ?>
+                                </select>
+
+                                
+                            </div>
+                        </div>
+
         <div class="form-group">
             <input type="hidden" name="parent_material_update_id" value="<?php echo $editData->id; ?>">
             <label class="control-label col-sm-5" for="category_id">Category Id:</label>
@@ -820,6 +877,14 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'parent_material_edi
                 <input type="text" class="form-control" id="edit_parent_name" placeholder="name" name="name" value="<?php if(isset($editData->category_description)){ echo $editData->category_description; } ?>">
             </div>
         </div>
+        <div class="form-group mt-3">
+                            <label class="control-label col-sm-5" for="_order">Order:</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="_order" placeholder="Order" name="_order" value="<?php if(isset($editData->_order)){ echo $editData->_order; } ?>">
+                            </div>
+                        </div>
+
+    
 <?php }
 if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_parent_category'){
     include '../connection/connect.php';
@@ -837,7 +902,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
     include '../connection/connect.php';
     $catType   =   $_POST['cat_type'];
     $data_type  =   $_POST['data_type'];
-    
+    //echo $_POST['parent_cat'];
 
     global $conn;
     $sql            =   '';
@@ -847,6 +912,7 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
         case 'parent':
             $table =    'inv_materialcategorysub';
             $sql.= "SELECT * FROM $table";
+          //  $where =    ' where parent_id='.$_POST['parent_cat'];
             if(isset($where) && !empty($where)){
                 $sql.= $where;
             }
@@ -854,9 +920,9 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
             if ($result->num_rows > 0) {
                 $value          =   $result->num_rows + 1;
                 $code           =  sprintf('%0' . 2 . 's', $value);
-                $defaultCode    =  $code.'-00-00-00-000';
+                $defaultCode    =  $code.'-00';
             }else{
-                $defaultCode    =  '01-00-00-00-000';
+                $defaultCode    =  '01-00';
             }
 
 
@@ -867,20 +933,20 @@ if(isset($_GET['process_type']) && $_GET['process_type'] == 'get_category_code')
             $psql= "SELECT * FROM inv_materialcategorysub where id=".$_POST['parent_cat'];
             $presult = $conn->query($psql);
             
-            $table =    'inv_materialcategory';
-            $where =    ' where category_id='.$_POST['parent_cat'];
+            $table =    'inv_material';
+            $where =    ' where material_id='.$_POST['parent_cat'];
             $sql.= "SELECT * FROM $table";
             if(isset($where) && !empty($where)){
                 $sql.= $where;
             }
             $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
+            if ($result && $result->num_rows > 0) {
                 $parentPrefixcode   =  explode('-', $presult->fetch_object()->category_id);
                 $code               =  sprintf('%0' . 2 . 's', $result->num_rows + 1);
-                $defaultCode        =  $parentPrefixcode[0].'-'.$code.'-00-00-000';
+                $defaultCode        =  $parentPrefixcode[0].'-'.$code;
             }else{
                 $parentPrefixcode   =  explode('-', $presult->fetch_object()->category_id);
-                $defaultCode        =  $parentPrefixcode[0].'-01'.'-00-00-000';
+                $defaultCode        =  $parentPrefixcode[0].'-01';
             }
             break;
         case 'level3':

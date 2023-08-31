@@ -48,36 +48,50 @@ function closeModal(modalId) {
 }
 
 function processParentItems(form_id) {
+
+
     var validationResult;
     if (form_id == 'parent_item_added_form_value') {
-        $("#parent_item_added_form_value").validate();
-        $("#category_id").rules("add", {
-            required: true,
-            messages: {
-                required: "Please specify Category"
-            }
-        });
-        $("#parent_name").rules("add", {
-            required: true,
-            messages: {
-                required: "Please specify Name"
-            }
-        });
+        // $("#parent_item_added_form_value").validate();
+        // $("#parent_id").rules("add", {
+        //     required: true,
+        //     messages: {
+        //         required: "Please specify Category"
+        //     }
+        // });
+        // $("#parent_name").rules("add", {
+        //     required: true,
+        //     messages: {
+        //         required: "Please specify Name"
+        //     }
+        // });
+        var cat_name = $(document).find('#parent_name').val();
+        if (!cat_name) {
+                alert("Category Name is required");
+                return false;
+        }
+   // alert(cat_name)
         validationResult = $("#parent_item_added_form_value").valid();
     } else if (form_id == 'parent_item_edit_form_value') {
         $("#parent_item_edit_form_value").valid();
-        $("#edit_category_id").rules("add", {
-            required: true,
-            messages: {
-                required: "Please specify Category"
-            }
-        });
-        $("#edit_parent_name").rules("add", {
-            required: true,
-            messages: {
-                required: "Please specify Name"
-            }
-        });
+        // $("#parent_id").rules("add", {
+        //     required: true,
+        //     messages: {
+        //         required: "Please specify Category"
+        //     }
+        // });
+        // $("#edit_parent_name").rules("add", {
+        //     required: true,
+        //     messages: {
+        //         required: "Please specify Name"
+        //     }
+        // });
+
+        var cat_name = $(document).find('#edit_parent_name').val();
+        if (!cat_name) {
+                alert("Category Name is required");
+                return false;
+        }
         validationResult = $("#parent_item_edit_form_value").valid();
     }
     if (validationResult) {
@@ -96,6 +110,7 @@ function processParentItems(form_id) {
                     $('#material_min_stock').val('');
                     $('#category_id').val('');
                     $('#parent_name').val('');
+                    $('#_order').val('');
                     if (form_id == 'parent_item_added_form_value') {
                         $('#parent_item_added_form').modal('hide');
                     } else if (form_id == 'parent_item_edit_form_value') {
@@ -104,6 +119,8 @@ function processParentItems(form_id) {
                     $('#parent_category_body').html(response.data);
                     $("#item_information").accordion({ active: 0 });
                     swal("Success", response.message, "success");
+                    //setTimeout(location.reload(), 10000);
+                    
                 } else {
                     swal("Failed", response.message, "error");
                 }
@@ -252,12 +269,12 @@ function processItems(form_id) {
                 required: "Please specify Category"
             }
         });
-        $("#main_sub_cat_item_id").rules("add", {
-            required: true,
-            messages: {
-                required: "Please specify Sub Category"
-            }
-        });
+        // $("#main_sub_cat_item_id").rules("add", {
+        //     required: true,
+        //     messages: {
+        //         required: "Please specify Sub Category"
+        //     }
+        // });
         $("#item_code").rules("add", {
             required: true,
             messages: {
@@ -319,6 +336,8 @@ function processItems(form_id) {
                     } else if (form_id == 'item_updated_form_value') {
                         $('#item_edit_form').modal('hide');
                     }
+                    //location.reload();
+                    $('#item_category_body').empty();
                     $('#item_category_body').html(response.data);
                     $("#item_information").accordion({ active: 4 });
                     swal("Success", response.message, "success");
@@ -646,8 +665,29 @@ function getSubCodeByParenId(parent_id, selector = false) {
                 }
             }
         });
+         
     } else {
-        $('#sub_code').val('');
+        $('#item_code').val('');
+    }
+}
+function getMainCategoryCode(parent_id, selector = false) {
+    if (parent_id) {
+        $.ajax({
+            url: baseUrl + "includes/item_process.php?process_type=get_category_code",
+            type: 'POST',
+            dataType: 'json',
+            data: 'cat_type=parent&data_type=ajax&parent_cat=' + parent_id,
+            success: function(response) {
+                if (selector) {
+                    $('#' + selector).val(response.code);
+                } else {
+                    $('#sub_code').val(response.code);
+                }
+            }
+        });
+         
+    } else {
+        $('#item_code').val('');
     }
 }
 function getLevel3CodeByLevel2(level_2_id, selector = false) {
